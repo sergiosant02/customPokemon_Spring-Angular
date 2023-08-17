@@ -1,7 +1,9 @@
 package com.customPokemonApi.customPokemonApi.services;
 
+import com.customPokemonApi.customPokemonApi.models.UserGeneralResponse;
+
 public interface UserService {
 	
-	public String login(String mail, String password);
+	public UserGeneralResponse<String> login(String mail, String password);
 	
 }
