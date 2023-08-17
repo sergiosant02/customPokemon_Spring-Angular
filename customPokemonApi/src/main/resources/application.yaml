@@ -1,0 +1,13 @@
+# stocks api
+poke:
+  api:
+    pokemon:
+      fqdn: https://pokeapi.co/api/v2/pokemon/
+    
+spring:
+  data:
+    mysql:
+      database: userInfo
+      table: credentials
+      host: localhost
+      port: 3306
