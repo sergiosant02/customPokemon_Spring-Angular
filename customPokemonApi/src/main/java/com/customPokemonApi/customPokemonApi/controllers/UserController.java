@@ -41,8 +41,12 @@ import jakarta.validation.Valid;
 import com.customPokemonApi.customPokemonApi.configs.jwt.JwtResponse;
 import com.customPokemonApi.customPokemonApi.configs.jwt.JwtUtils;
 import com.customPokemonApi.customPokemonApi.models.AccountCredentials;
+import com.customPokemonApi.customPokemonApi.models.CreateAccountCredentials;
+import com.customPokemonApi.customPokemonApi.models.rolePack.ERole;
+import com.customPokemonApi.customPokemonApi.models.rolePack.Role;
 import com.customPokemonApi.customPokemonApi.models.user.UserDetailsImpl;
 import com.customPokemonApi.customPokemonApi.models.user.UserGeneralResponse;
+import com.customPokemonApi.customPokemonApi.models.user.UserModel;
 import com.customPokemonApi.customPokemonApi.repository.RoleRepository;
 import com.customPokemonApi.customPokemonApi.repository.UserRepository;
 import com.customPokemonApi.customPokemonApi.services.UserService;
@@ -105,5 +109,31 @@ public class UserController {
 	                         userDetails.getUsername(), 
 	                         userDetails.getEmail(), 
 	                         roles));
+	  }
+	
+	@PostMapping("/signup")
+	  public ResponseEntity<?> registerUser(@Valid @RequestBody CreateAccountCredentials signUpRequest) {
+	    if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+	      return ResponseEntity
+	          .badRequest()
+	          .body("Error: Username is already taken!");
+	    }
+
+	    if (userRepository.existsByMail(signUpRequest.getMail())) {
+	      return ResponseEntity
+	          .badRequest()
+	          .body("Error: Email is already in use!");
+	    }
+
+	    // Create new user's account
+	    UserModel user = new UserModel(signUpRequest.getName(), signUpRequest.getUsername(), signUpRequest.getLastName(),
+	               signUpRequest.getMail(),
+	               encoder.encode(signUpRequest.getPassword()));
+
+	    Role role = new Role(ERole.USER);
+	    user.setRole(role);
+	    userRepository.save(user);
+
+	    return ResponseEntity.ok("User registered successfully!");
 	  }
 }

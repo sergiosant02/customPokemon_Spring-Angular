@@ -24,6 +24,17 @@ import lombok.Setter;
 @Table(name = "credentials")
 public class UserModel {
 	
+	public UserModel(String name, String username, String lastName, String mail, String password)
+	{
+		super();
+		this.name = name;
+		this.username = username;
+		this.lastName = lastName;
+		this.mail = mail;
+		this.password = password;
+	}
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -46,6 +57,7 @@ public class UserModel {
 	@JoinColumn(nullable = false, name = "role_id")
 	@ManyToOne
 	private Role role;
+
 
 	public Long getId() {
 		return id;
