@@ -1,6 +1,6 @@
 package com.customPokemonApi.customPokemonApi.services;
 
-import com.customPokemonApi.customPokemonApi.models.UserGeneralResponse;
+import com.customPokemonApi.customPokemonApi.models.user.UserGeneralResponse;
 
 public interface UserService {
 	

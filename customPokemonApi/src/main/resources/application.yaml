@@ -3,6 +3,12 @@ poke:
   api:
     pokemon:
       fqdn: https://pokeapi.co/api/v2/pokemon/
+  jwt:
+    jwtExpirationMs:
+      86400000
+    secret:
+      "%WSKaJDmKs8L7sbtominmrteh5hkoitrgjrtbiuruhbmrjtg5ijgrvofjbrtjnynbjgbekgjhokthjopikgjbiubtnoeruyhgothoptb"
+      
     
 spring:
   data:
@@ -11,3 +17,4 @@ spring:
       table: credentials
       host: localhost
       port: 3306
+      

@@ -1,4 +1,4 @@
-package com.customPokemonApi.customPokemonApi.models;
+package com.customPokemonApi.customPokemonApi.models.user;
 
 import java.util.HashSet;
 import java.util.Set;
