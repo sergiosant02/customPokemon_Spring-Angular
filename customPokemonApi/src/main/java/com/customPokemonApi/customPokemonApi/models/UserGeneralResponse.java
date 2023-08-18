@@ -1,6 +1,8 @@
 package com.customPokemonApi.customPokemonApi.models;
 
-import org.eclipse.collections.impl.set.mutable.UnifiedSet;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.http.HttpStatus;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,7 +17,7 @@ public class UserGeneralResponse<T> {
 	    private HttpStatus httpStatus;
 
 	    @JsonProperty("userMessages")
-	    private UnifiedSet<String> userMessages = UnifiedSet.newSet();
+	    private Set<String> userMessages = new HashSet<String>();
 
 	    public UserGeneralResponse() {
 	       
@@ -47,12 +49,12 @@ public class UserGeneralResponse<T> {
 		}
 
 
-		public UnifiedSet<String> getUserMessages() {
+		public Set<String> getUserMessages() {
 			return userMessages;
 		}
 
 
-		public void setUserMessages(UnifiedSet<String> userMessages) {
+		public void setUserMessages(Set<String> userMessages) {
 			this.userMessages = userMessages;
 		}
 }

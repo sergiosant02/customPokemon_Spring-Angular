@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService{
 			code = HttpStatus.OK;
 		} else {
 			code = HttpStatus.UNAUTHORIZED;
-		}
+		} 
 		UserGeneralResponse<String> userGeneralResponse =  new UserGeneralResponse<String>(token, code);
 		return userGeneralResponse;
 	}

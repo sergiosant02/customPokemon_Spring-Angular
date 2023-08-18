@@ -5,19 +5,21 @@ import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VAL
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.customPokemonApi.customPokemonApi.models.AccountCredentials;
 import com.customPokemonApi.customPokemonApi.models.UserGeneralResponse;
 import com.customPokemonApi.customPokemonApi.services.UserService;
 
 @RestController
 @RequestMapping(
         value="/api/v1/user",
-        consumes = {APPLICATION_JSON_VALUE, APPLICATION_FORM_URLENCODED_VALUE, ALL_VALUE},
+        consumes = {APPLICATION_JSON_VALUE, APPLICATION_FORM_URLENCODED_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE, ALL_VALUE},
         produces = {APPLICATION_JSON_VALUE})
 public class UserController {
 	
@@ -25,9 +27,9 @@ public class UserController {
 	private UserService userService;
 
 	@PostMapping(value="/login")
-	public ResponseEntity<UserGeneralResponse<String>> login(@RequestBody()String mail, @RequestBody String password ){
+	public ResponseEntity<UserGeneralResponse<String>> login(@RequestBody() AccountCredentials accountCredentials ){
 		ResponseEntity<UserGeneralResponse<String>> response;
-		UserGeneralResponse<String> userResponse = userService.login(mail, password);
+		UserGeneralResponse<String> userResponse = userService.login(accountCredentials.getMail(), accountCredentials.getPassword());
 		response = new ResponseEntity<UserGeneralResponse<String>>(userResponse, userResponse.getHttpStatus());
 		return response;
 	}
