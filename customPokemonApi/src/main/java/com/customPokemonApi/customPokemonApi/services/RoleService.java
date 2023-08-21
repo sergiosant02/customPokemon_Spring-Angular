@@ -15,6 +15,10 @@ public class RoleService {
 	@Autowired
 	private RoleRepository roleRepository;
 	
+	public RoleService(RoleRepository roleRepository) {
+		this.roleRepository = roleRepository;
+	}
+	
 	@Transactional
 	public Role findByErole(ERole eRole) {
 		return roleRepository.findByName(eRole).orElse(null);
