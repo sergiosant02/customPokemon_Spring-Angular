@@ -43,97 +43,64 @@ import com.customPokemonApi.customPokemonApi.configs.jwt.JwtUtils;
 import com.customPokemonApi.customPokemonApi.models.AccountCredentials;
 import com.customPokemonApi.customPokemonApi.models.CreateAccountCredentials;
 import com.customPokemonApi.customPokemonApi.models.rolePack.ERole;
-import com.customPokemonApi.customPokemonApi.models.rolePack.Role;
 import com.customPokemonApi.customPokemonApi.models.user.UserDetailsImpl;
-import com.customPokemonApi.customPokemonApi.models.user.UserGeneralResponse;
-import com.customPokemonApi.customPokemonApi.models.user.UserModel;
-import com.customPokemonApi.customPokemonApi.repository.RoleRepository;
-import com.customPokemonApi.customPokemonApi.repository.UserRepository;
-import com.customPokemonApi.customPokemonApi.services.UserService;
+
+import com.customPokemonApi.customPokemonApi.services.UserDetailsServiceImpl;
 
 @RestController
 @RequestMapping(
-        value="/api/v1/user",
-        consumes = {APPLICATION_JSON_VALUE, APPLICATION_FORM_URLENCODED_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE, ALL_VALUE},
-        produces = {APPLICATION_JSON_VALUE})
+		value="/api/v1/user",
+		consumes = {APPLICATION_JSON_VALUE, APPLICATION_FORM_URLENCODED_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE, ALL_VALUE},
+		produces = {APPLICATION_JSON_VALUE})
 public class UserController {
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
 	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	private RoleRepository roleRepository;
-
-	@Autowired
-	private PasswordEncoder encoder;
-
-	@Autowired
 	private JwtUtils jwtUtils;
-	  
-	@Autowired
-	private UserService userService;
 
-	@PostMapping(value="/login")
-	public ResponseEntity<UserGeneralResponse<String>> login(@RequestBody() AccountCredentials accountCredentials ){
-		ResponseEntity<UserGeneralResponse<String>> response;
-		UserGeneralResponse<String> userResponse = userService.login(accountCredentials.getMail(), accountCredentials.getPassword());
-		response = new ResponseEntity<UserGeneralResponse<String>>(userResponse, userResponse.getHttpStatus());
-		return response;
-	}
-	
-	@GetMapping(value = "/get")
-	public String prueba( ){
-		
-		return "Prueba";
-	}
-	
+	@Autowired
+	private UserDetailsServiceImpl userService;
+
+
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@RequestBody AccountCredentials loginRequest) {
 
-	String pass = encoder.encode("prueba");
-	  Authentication authentication = authenticationManager.authenticate(
-	      new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),loginRequest.getPassword()));
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),loginRequest.getPassword()));
 
-	  SecurityContextHolder.getContext().setAuthentication(authentication);
-	  String jwt = jwtUtils.generateJwtToken(authentication);
-	  UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();    
-	  List<String> roles = userDetails.getAuthorities().stream()
-	        .map(item -> item.getAuthority())
-	        .collect(Collectors.toList());
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String jwt = jwtUtils.generateJwtToken(authentication);
+		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();    
+		List<String> roles = userDetails.getAuthorities().stream()
+				.map(item -> item.getAuthority())
+				.collect(Collectors.toList());
 
-	    return ResponseEntity.ok(new JwtResponse(jwt, 
-	                         userDetails.getId(), 
-	                         userDetails.getUsername(), 
-	                         userDetails.getEmail(), 
-	                         roles));
-	  }
-	
+		return ResponseEntity.ok(new JwtResponse(jwt, 
+				userDetails.getId(), 
+				userDetails.getUsername(), 
+				userDetails.getEmail(), 
+				roles));
+	}
+
 	@PostMapping("/signup")
-	  public ResponseEntity<?> registerUser(@Valid @RequestBody CreateAccountCredentials signUpRequest) {
-	    if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-	      return ResponseEntity
-	          .badRequest()
-	          .body("Error: Username is already taken!");
-	    }
+	public ResponseEntity<?> registerUser(@Valid @RequestBody CreateAccountCredentials signUpRequest) {
+		if (userService.existsByUsername(signUpRequest.getUsername())) {
+			return ResponseEntity
+					.badRequest()
+					.body("Error: Username is already taken!");
+		}
 
-	    if (userRepository.existsByMail(signUpRequest.getMail())) {
-	      return ResponseEntity
-	          .badRequest()
-	          .body("Error: Email is already in use!");
-	    }
+		if (userService.existsByMail(signUpRequest.getMail())) {
+			return ResponseEntity
+					.badRequest()
+					.body("Error: Email is already in use!");
+		}
 
-	    // Create new user's account
-	    UserModel user = new UserModel(signUpRequest.getName(), signUpRequest.getUsername(), signUpRequest.getLastName(),
-	               signUpRequest.getMail(),
-	               encoder.encode(signUpRequest.getPassword()));
+		// Create new user's account
+		userService.createUserByCredentials(signUpRequest, ERole.USER);
 
-	    Role role = new Role(ERole.USER);
-	    user.setRole(role);
-	    userRepository.save(user);
-
-	    return ResponseEntity.ok("User registered successfully!");
-	  }
+		return ResponseEntity.ok("User registered successfully!");
+	}
 }
