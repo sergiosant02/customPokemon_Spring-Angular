@@ -21,6 +21,7 @@ import com.customPokemonApi.customPokemonApi.configs.jwt.AuthTokenFilter;
 @Configuration	
 @EnableMethodSecurity
 public class WebSecurityConfig {
+	
 	 @Autowired
 	 private UserDetailsService userDetailsService;
 

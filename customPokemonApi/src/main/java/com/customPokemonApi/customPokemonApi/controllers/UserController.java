@@ -44,7 +44,7 @@ import com.customPokemonApi.customPokemonApi.models.AccountCredentials;
 import com.customPokemonApi.customPokemonApi.models.CreateAccountCredentials;
 import com.customPokemonApi.customPokemonApi.models.rolePack.ERole;
 import com.customPokemonApi.customPokemonApi.models.user.UserDetailsImpl;
-
+import com.customPokemonApi.customPokemonApi.models.user.UserModel;
 import com.customPokemonApi.customPokemonApi.services.UserDetailsServiceImpl;
 
 @RestController
@@ -62,6 +62,9 @@ public class UserController {
 
 	@Autowired
 	private UserDetailsServiceImpl userService;
+	
+	@Autowired
+	private PasswordEncoder encoder;
 
 
 	@PostMapping("/signin")
@@ -86,21 +89,32 @@ public class UserController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody CreateAccountCredentials signUpRequest) {
+		UserModel user; 
+		ResponseEntity<?> res;
+		String oldPassword = signUpRequest.getPassword();
 		if (userService.existsByUsername(signUpRequest.getUsername())) {
-			return ResponseEntity
+			res = ResponseEntity
 					.badRequest()
 					.body("Error: Username is already taken!");
-		}
-
-		if (userService.existsByMail(signUpRequest.getMail())) {
-			return ResponseEntity
+		} else if (userService.existsByMail(signUpRequest.getMail())) {
+			res = ResponseEntity
 					.badRequest()
 					.body("Error: Email is already in use!");
+		} else {
+			
+			// Create new user's account
+			signUpRequest.setPassword(encoder.encode(signUpRequest.getPassword()));
+			user = userService.createUserByCredentials(signUpRequest, ERole.USER);
+			if (user == null) {
+				res = ResponseEntity
+						.badRequest()
+						.body("Error: Rol not found");
+			}
+			res = ResponseEntity.ok("User registered successfully!");
+			AccountCredentials accountCredentials = new AccountCredentials(signUpRequest.getMail(), oldPassword, signUpRequest.getUsername());
+			res = authenticateUser(accountCredentials);
 		}
 
-		// Create new user's account
-		userService.createUserByCredentials(signUpRequest, ERole.USER);
-
-		return ResponseEntity.ok("User registered successfully!");
+		return res;
 	}
 }

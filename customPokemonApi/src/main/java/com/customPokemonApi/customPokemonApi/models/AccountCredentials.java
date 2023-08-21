@@ -2,6 +2,15 @@ package com.customPokemonApi.customPokemonApi.models;
 
 
 public class AccountCredentials {
+	
+	public AccountCredentials(String mail, String password, String username)
+	{
+		super();
+		this.mail = mail;
+		this.password = password;
+		this.username = username;
+	}
+	
 	private String mail;
 	private String password;
 	private String username;

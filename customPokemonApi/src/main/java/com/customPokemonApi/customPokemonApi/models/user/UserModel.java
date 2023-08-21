@@ -1,17 +1,11 @@
 package com.customPokemonApi.customPokemonApi.models.user;
 
 
-
-
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.customPokemonApi.customPokemonApi.models.CreateAccountCredentials;
 import com.customPokemonApi.customPokemonApi.models.rolePack.Role;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-//import jakarta.persistence.GeneratedValue;
-//import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -41,10 +35,10 @@ public class UserModel {
 		this.password = password;
 	}
 	
-	public static UserModel byCredentials(CreateAccountCredentials credentials, PasswordEncoder encoder) {
+	public static UserModel byCredentials(CreateAccountCredentials credentials) {
 		 UserModel user = new UserModel(credentials.getName(), credentials.getUsername(), credentials.getLastName(),
 				 credentials.getMail(),
-	               encoder.encode(credentials.getPassword()));
+	               credentials.getPassword());
 		 return user;
 	}
 	

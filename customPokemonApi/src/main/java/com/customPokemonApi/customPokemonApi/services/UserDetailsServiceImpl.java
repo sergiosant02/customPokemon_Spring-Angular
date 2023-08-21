@@ -20,11 +20,15 @@ import jakarta.transaction.Transactional;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{
 
-	 @Autowired
-	 private UserRepository userRepository;
 	 
-
-	 private PasswordEncoder encoder;
+	 private UserRepository userRepository;
+	 private RoleService roleService;
+	 
+	 @Autowired
+	 public UserDetailsServiceImpl(UserRepository userRepository, RoleService roleService) {
+		 this.userRepository = userRepository;
+		 this.roleService = roleService;
+	 }
 
 	 @Override
 	 @Transactional
@@ -52,11 +56,16 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	 
 	 @Transactional
 	 public UserModel createUserByCredentials(CreateAccountCredentials credentials, ERole eRole) {
-		UserModel user = UserModel.byCredentials(credentials, encoder);
+		UserModel user = UserModel.byCredentials(credentials);
 
-	    Role role = new Role(eRole);
-	    user.setRole(role);
-	    return save(user);
+	    Role role = roleService.findByErole(eRole);
+	    if(role != null) {
+	    	user.setRole(role);
+	    	user = save(user);
+	    } else {
+	    	user = null;
+	    }
+	    return user;
 	 }
 
 }
