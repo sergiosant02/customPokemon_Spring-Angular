@@ -27,6 +27,10 @@ import lombok.Setter;
 @Table(name = "credentials")
 public class UserModel {
 	
+	public UserModel() {
+		
+	}
+	
 	public UserModel(String name, String username, String lastName, String mail, String password)
 	{
 		super();
