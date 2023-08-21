@@ -1,4 +1,4 @@
-/*package com.customPokemonApi.customPokemonApi.configs;
+package com.customPokemonApi.customPokemonApi.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,4 +18,3 @@ public class BasicAuthWebSecurityConfiguration {
 		return httpSecurity.build();
 	}
 }
-*/

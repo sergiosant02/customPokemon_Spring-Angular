@@ -110,7 +110,6 @@ public class UserController {
 						.badRequest()
 						.body("Error: Rol not found");
 			}
-			res = ResponseEntity.ok("User registered successfully!");
 			AccountCredentials accountCredentials = new AccountCredentials(signUpRequest.getMail(), oldPassword, signUpRequest.getUsername());
 			res = authenticateUser(accountCredentials);
 		}
