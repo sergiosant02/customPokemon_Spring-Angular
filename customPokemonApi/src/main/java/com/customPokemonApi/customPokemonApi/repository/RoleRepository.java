@@ -1,5 +1,6 @@
 package com.customPokemonApi.customPokemonApi.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
@@ -10,5 +11,7 @@ import com.customPokemonApi.customPokemonApi.models.rolePack.Role;
 
 @Repository
 public interface RoleRepository extends CrudRepository<Role, Long> {
-	Optional<Role> findByName(ERole name);
+	public Optional<Role> findByName(ERole name);
+	
+	public List<Role> findAll();
 }

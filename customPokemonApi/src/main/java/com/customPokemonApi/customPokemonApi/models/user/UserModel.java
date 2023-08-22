@@ -25,19 +25,19 @@ public class UserModel {
 		
 	}
 	
-	public UserModel(String name, String username, String lastName, String mail, String password)
+	public UserModel(String name, String username, String lastName, String email, String password)
 	{
 		super();
 		this.name = name;
 		this.username = username;
 		this.lastName = lastName;
-		this.mail = mail;
+		this.email = email;
 		this.password = password;
 	}
 	
 	public static UserModel byCredentials(CreateAccountCredentials credentials) {
 		 UserModel user = new UserModel(credentials.getName(), credentials.getUsername(), credentials.getLastName(),
-				 credentials.getMail(),
+				 credentials.getEmail(),
 	               credentials.getPassword());
 		 return user;
 	}
@@ -57,7 +57,7 @@ public class UserModel {
 	private String lastName;
 
 	@Column(nullable = false)
-	private String mail;
+	private String email;
 	
 	@Column(nullable = false)
 	private String password;
@@ -91,12 +91,12 @@ public class UserModel {
 		this.lastName = lastName;
 	}
 
-	public String getMail() {
-		return mail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {

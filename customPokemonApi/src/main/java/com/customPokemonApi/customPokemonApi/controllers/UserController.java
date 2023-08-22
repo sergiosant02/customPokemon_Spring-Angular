@@ -96,7 +96,7 @@ public class UserController {
 			res = ResponseEntity
 					.badRequest()
 					.body("Error: Username is already taken!");
-		} else if (userService.existsByMail(signUpRequest.getMail())) {
+		} else if (userService.existsByMail(signUpRequest.getEmail())) {
 			res = ResponseEntity
 					.badRequest()
 					.body("Error: Email is already in use!");
@@ -110,7 +110,7 @@ public class UserController {
 						.badRequest()
 						.body("Error: Rol not found");
 			}
-			AccountCredentials accountCredentials = new AccountCredentials(signUpRequest.getMail(), oldPassword, signUpRequest.getUsername());
+			AccountCredentials accountCredentials = new AccountCredentials(signUpRequest.getEmail(), oldPassword, signUpRequest.getUsername());
 			res = authenticateUser(accountCredentials);
 		}
 

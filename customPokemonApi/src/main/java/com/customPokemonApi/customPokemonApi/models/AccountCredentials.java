@@ -3,15 +3,15 @@ package com.customPokemonApi.customPokemonApi.models;
 
 public class AccountCredentials {
 	
-	public AccountCredentials(String mail, String password, String username)
+	public AccountCredentials(String email, String password, String username)
 	{
 		super();
-		this.mail = mail;
+		this.email = email;
 		this.password = password;
 		this.username = username;
 	}
 	
-	private String mail;
+	private String email;
 	private String password;
 	private String username;
 	
@@ -28,9 +28,9 @@ public class AccountCredentials {
 		this.password = password;
 	}
 	public String getMail() {
-		return mail;
+		return email;
 	}
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

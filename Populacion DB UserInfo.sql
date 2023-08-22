@@ -1,9 +1,9 @@
 USE userInfo;
 
-insert into role (name) VALUES 
-	("USER"),
-    ("ANONYMOUS"),
-	("ADMIN");
+insert into role (id, name) VALUES 
+	(1,"USER"),
+    (2,"ANONYMOUS"),
+	(3,"ADMIN");
 
 INSERT INTO credentials (id,mail, password, name, last_name, role_id, username) VALUES 
 	(1,"user@gmail.com", "$2a$10$4fsBn/4ztJDqlnOW7xZq1.3afSXuFCyHdVRFpSTuseiKzycOGYKXi", "pokeUser", "lastName", 1, "user"),

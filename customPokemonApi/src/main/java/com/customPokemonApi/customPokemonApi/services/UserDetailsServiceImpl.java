@@ -50,7 +50,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	 
 	 @Transactional
 	 public Boolean existsByMail(String mail) {
-		 return userRepository.existsByMail(mail);
+		 return userRepository.existsByEmail(mail);
 	 }
 	 
 	 @Transactional
