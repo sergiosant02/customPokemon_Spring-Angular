@@ -54,16 +54,18 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	 }
 	 
 	 @Transactional
-	 public UserModel createUserByCredentials(CreateAccountCredentials credentials, ERole eRole) {
+	 public UserModel createUserByCredentials(CreateAccountCredentials credentials) {
 		UserModel user = UserModel.byCredentials(credentials);
-
-	    Role role = roleService.findByErole(eRole);
-	    if(role != null) {
-	    	user.setRole(role);
-	    	user = save(user);
-	    } else {
-	    	user = null;
-	    }
+		Role role = null;
+		if(credentials.getRole().isPresent()) {
+			role = roleService.findByName(credentials.getRole().get()).orElse(null);
+		} 
+	    if(role == null) {
+	    	role = roleService.findByErole(ERole.USER);
+	    } 
+	    user.setRole(role);
+	    user = save(user);
+	    
 	    return user;
 	 }
 
