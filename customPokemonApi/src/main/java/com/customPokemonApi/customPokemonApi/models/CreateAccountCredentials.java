@@ -1,23 +1,39 @@
 package com.customPokemonApi.customPokemonApi.models;
 
+import java.util.Optional;
+
 public class CreateAccountCredentials {
 	
-	public CreateAccountCredentials(String mail, String password, String username, String name, String lastName)
-	{
-		super();
-		this.mail = mail;
-		this.password = password;
-		this.username = username;
-		this.name = name;
-		this.lastName = lastName;
-	}
-	public CreateAccountCredentials(){}
-	
-	private String mail;
+	private String email;
 	private String password;
 	private String username;
 	private String name;
 	private String lastName;
+	private Optional<String> role;
+	
+	public CreateAccountCredentials(String email, String password, String username, String name, String lastName){
+		super();
+		this.email = email;
+		this.password = password;
+		this.username = username;
+		this.name = name;
+		this.lastName = lastName;
+		this.role = Optional.empty();
+	}
+	
+	public CreateAccountCredentials(String email, String password, String username, String name, String lastName, String role){
+		super();
+		this.email = email;
+		this.password = password;
+		this.username = username;
+		this.name = name;
+		this.lastName = lastName;
+		this.role = Optional.of(role);
+	}
+	public CreateAccountCredentials(){
+		this.role = Optional.empty();
+	}
+	
 	
 	public String getUsername() {
 		return username;
@@ -31,11 +47,11 @@ public class CreateAccountCredentials {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getMail() {
-		return mail;
+	public String getEmail() {
+		return email;
 	}
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getName() {
 		return name;
@@ -49,4 +65,13 @@ public class CreateAccountCredentials {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
+	public Optional<String> getRole() {
+		return role;
+	}
+
+	public void setRole(Optional<String> role) {
+		this.role = role;
+	}
+	
 }

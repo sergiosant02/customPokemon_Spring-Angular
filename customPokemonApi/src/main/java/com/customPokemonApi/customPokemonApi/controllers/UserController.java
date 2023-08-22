@@ -45,6 +45,7 @@ import com.customPokemonApi.customPokemonApi.models.CreateAccountCredentials;
 import com.customPokemonApi.customPokemonApi.models.rolePack.ERole;
 import com.customPokemonApi.customPokemonApi.models.user.UserDetailsImpl;
 import com.customPokemonApi.customPokemonApi.models.user.UserModel;
+import com.customPokemonApi.customPokemonApi.services.RoleService;
 import com.customPokemonApi.customPokemonApi.services.UserDetailsServiceImpl;
 
 @RestController
@@ -64,6 +65,9 @@ public class UserController {
 	private UserDetailsServiceImpl userService;
 	
 	@Autowired
+	private RoleService roleService;
+	
+	@Autowired
 	private PasswordEncoder encoder;
 
 
@@ -79,7 +83,9 @@ public class UserController {
 		List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
-
+		System.out.println(roleService.findByName("admin"));
+		System.out.println(roleService.findByName("user"));
+		System.out.println(roleService.findByName("anonymous"));
 		return ResponseEntity.ok(new JwtResponse(jwt, 
 				userDetails.getId(), 
 				userDetails.getUsername(), 
@@ -96,7 +102,7 @@ public class UserController {
 			res = ResponseEntity
 					.badRequest()
 					.body("Error: Username is already taken!");
-		} else if (userService.existsByMail(signUpRequest.getMail())) {
+		} else if (userService.existsByMail(signUpRequest.getEmail())) {
 			res = ResponseEntity
 					.badRequest()
 					.body("Error: Email is already in use!");
@@ -104,13 +110,13 @@ public class UserController {
 			
 			// Create new user's account
 			signUpRequest.setPassword(encoder.encode(signUpRequest.getPassword()));
-			user = userService.createUserByCredentials(signUpRequest, ERole.USER);
+			user = userService.createUserByCredentials(signUpRequest);
 			if (user == null) {
 				res = ResponseEntity
 						.badRequest()
 						.body("Error: Rol not found");
 			}
-			AccountCredentials accountCredentials = new AccountCredentials(signUpRequest.getMail(), oldPassword, signUpRequest.getUsername());
+			AccountCredentials accountCredentials = new AccountCredentials(signUpRequest.getEmail(), oldPassword, signUpRequest.getUsername());
 			res = authenticateUser(accountCredentials);
 		}
 

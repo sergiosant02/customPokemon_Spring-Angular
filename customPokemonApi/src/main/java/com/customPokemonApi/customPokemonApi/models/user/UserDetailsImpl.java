@@ -13,42 +13,48 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.customPokemonApi.customPokemonApi.models.rolePack.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 public class UserDetailsImpl implements UserDetails{
 
 	private static final long serialVersionUID = 1L;
 
-	  private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-	  private String username;
+	private String username;
 
-	  private String email;
+	private String email;
 
-	  @JsonIgnore
-	  private String password;
+	@JsonIgnore
+	private String password; 
 
-	  private Collection<? extends GrantedAuthority> authorities;
+	private Collection<? extends GrantedAuthority> authorities;
 
-	  public UserDetailsImpl(Long id, String username, String email, String password,
-	      Collection<? extends GrantedAuthority> authorities) {
-	    this.id = id;
-	    this.username = username;
-	    this.email = email;
-	    this.password = password;
-	    this.authorities = authorities;
-	  }
+	public UserDetailsImpl(Long id, String username, String email, String password,
+			Collection<? extends GrantedAuthority> authorities) {
+		this.id = id;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.authorities = authorities;
+	}
 
-	  public static UserDetailsImpl build(UserModel user) {
+	public static UserDetailsImpl build(UserModel user) {
 		GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().getName().name());
 		List<GrantedAuthority> authorities = List.of(authority);
-	    
 
-	    return new UserDetailsImpl(
-	        user.getId(), 
-	        user.getUsername(), 
-	        user.getMail(),
-	        user.getPassword(), 
-	        authorities);
-	  }
+
+		return new UserDetailsImpl(
+				user.getId(), 
+				user.getUsername(), 
+				user.getEmail(),
+				user.getPassword(), 
+				authorities);
+	}
 
 	public Long getId() {
 		return id;
@@ -96,23 +102,23 @@ public class UserDetailsImpl implements UserDetails{
 
 	@Override
 	public boolean isAccountNonExpired() {
-	  return true;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-	  return true;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-	  return true;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-	  return true;
+		return true;
 	}
-	
+
 
 }

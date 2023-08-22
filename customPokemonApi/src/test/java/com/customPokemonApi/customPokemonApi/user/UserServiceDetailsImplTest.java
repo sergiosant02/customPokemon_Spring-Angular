@@ -89,14 +89,14 @@ public class UserServiceDetailsImplTest {
 	public void createUserByCredentialsOk () {
 		when(roleRepository.findByName(ERole.USER)).thenReturn(Optional.of(role));
 		when(userRepository.save(any())).thenReturn(userList.get(0));
-		assertEquals(userService.createUserByCredentials(credList.get(0), role.getName()), userList.get(0));
+		assertEquals(userService.createUserByCredentials(credList.get(0)), userList.get(0));
 		
 	}
 	
 	@Test
 	public void createUserByCredentialsBad () {
 		when(roleRepository.findByName(ERole.USER)).thenReturn(Optional.empty());
-		assertEquals(userService.createUserByCredentials(credList.get(0), role.getName()),null);
+		assertEquals(userService.createUserByCredentials(credList.get(0)),null);
 		
 	}
 }

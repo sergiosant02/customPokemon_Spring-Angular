@@ -15,12 +15,17 @@ public class Role {
 	
 	
 
+	@Override
+	public String toString() {
+		return "Role [name=" + name + "]";
+	}
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(length = 20)
+	@Column(length = 20, nullable = false)
 	private ERole name;
 	
 	
