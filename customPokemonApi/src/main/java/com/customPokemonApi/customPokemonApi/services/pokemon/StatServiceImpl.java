@@ -25,9 +25,9 @@ public class StatServiceImpl implements StatService{
 	@Override
 	public Stat manageState(Stat stat) {
 		Stat res;
-		Optional<Stat> ab = this.getStatByStatName(stat.getNameStat().getName());
-		if(ab.isPresent()) {
-			res = ab.get();
+		Optional<Stat> st = this.getStatByStatName(stat.getNameStat().getName());
+		if(st.isPresent()) {
+			res = st.get();
 		} else {
 			res = this.save(stat);
 		}
