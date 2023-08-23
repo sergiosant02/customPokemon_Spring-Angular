@@ -7,6 +7,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -85,7 +86,9 @@ public class UserController {
 		List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
-		pokeService.getPokemonByIdNetwork(1);
+		
+		//System.out.println(pokeService.getPokemonByIdNetwork(id));
+		System.out.println(pokeService.getPokemonById(10L));;
 		return ResponseEntity.ok(new JwtResponse(jwt, 
 				userDetails.getId(), 
 				userDetails.getUsername(), 

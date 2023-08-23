@@ -5,6 +5,11 @@ import org.springframework.http.HttpStatus;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class PokemonGeneralResponse<T> {
 
 	@JsonProperty("response")
@@ -24,27 +29,11 @@ public class PokemonGeneralResponse<T> {
         this.httpStatus = httpStatus;
     }
 
-    public T getResponse() {
-        return response;
-    }
+	@Override
+	public String toString() {
+		return "PokemonGeneralResponse [response=" + response + ", httpStatus=" + httpStatus + ", userMessages="
+				+ userMessages + "]";
+	}
 
-    public void setResponse(T response) {
-        this.response = response;
-    }
 
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
-
-    public void setHttpStatus(HttpStatus httpStatus) {
-        this.httpStatus = httpStatus;
-    }
-
-    public UnifiedSet<String> getUserMessages() {
-        return userMessages;
-    }
-
-    public void setUserMessages(UnifiedSet<String> userMessages) {
-        this.userMessages = userMessages;
-    }
 }

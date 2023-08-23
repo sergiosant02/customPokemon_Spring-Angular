@@ -38,7 +38,7 @@ public class PokemonController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<PokemonGeneralResponse> getPokemonById(@PathVariable() Integer id){
+	public ResponseEntity<PokemonGeneralResponse> getPokemonById(@PathVariable() Long id){
 		ResponseEntity<PokemonGeneralResponse> responseEntity;
 		PokemonGeneralResponse serviceResponse = pokemonService.getPokemonById(id);
         responseEntity = new ResponseEntity<>(serviceResponse, serviceResponse.getHttpStatus());
