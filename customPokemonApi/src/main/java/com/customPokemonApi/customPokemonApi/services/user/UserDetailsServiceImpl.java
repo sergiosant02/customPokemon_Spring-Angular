@@ -1,4 +1,4 @@
-package com.customPokemonApi.customPokemonApi.services;
+package com.customPokemonApi.customPokemonApi.services.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +13,7 @@ import com.customPokemonApi.customPokemonApi.models.rolePack.Role;
 import com.customPokemonApi.customPokemonApi.models.user.UserDetailsImpl;
 import com.customPokemonApi.customPokemonApi.models.user.UserModel;
 import com.customPokemonApi.customPokemonApi.repository.UserRepository;
+import com.customPokemonApi.customPokemonApi.services.role.RoleServiceImpl;
 
 import jakarta.transaction.Transactional;
 
@@ -22,9 +23,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 
 	 
 	 private UserRepository userRepository;
-	 private RoleService roleService;
+	 private RoleServiceImpl roleService;
 	 
-	 public UserDetailsServiceImpl(UserRepository userRepository, RoleService roleService) {
+	 public UserDetailsServiceImpl(UserRepository userRepository, RoleServiceImpl roleService) {
 		 this.userRepository = userRepository;
 		 this.roleService = roleService;
 	 }

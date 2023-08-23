@@ -42,11 +42,13 @@ import com.customPokemonApi.customPokemonApi.configs.jwt.JwtResponse;
 import com.customPokemonApi.customPokemonApi.configs.jwt.JwtUtils;
 import com.customPokemonApi.customPokemonApi.models.AccountCredentials;
 import com.customPokemonApi.customPokemonApi.models.CreateAccountCredentials;
+import com.customPokemonApi.customPokemonApi.models.pokemon.Pokemon;
 import com.customPokemonApi.customPokemonApi.models.rolePack.ERole;
 import com.customPokemonApi.customPokemonApi.models.user.UserDetailsImpl;
 import com.customPokemonApi.customPokemonApi.models.user.UserModel;
-import com.customPokemonApi.customPokemonApi.services.RoleService;
-import com.customPokemonApi.customPokemonApi.services.UserDetailsServiceImpl;
+import com.customPokemonApi.customPokemonApi.services.pokemon.PokemonServiceImpl;
+import com.customPokemonApi.customPokemonApi.services.role.RoleServiceImpl;
+import com.customPokemonApi.customPokemonApi.services.user.UserDetailsServiceImpl;
 
 @RestController
 @RequestMapping(
@@ -65,7 +67,7 @@ public class UserController {
 	private UserDetailsServiceImpl userService;
 	
 	@Autowired
-	private RoleService roleService;
+	private PokemonServiceImpl pokeService;
 	
 	@Autowired
 	private PasswordEncoder encoder;
@@ -83,9 +85,7 @@ public class UserController {
 		List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
-		System.out.println(roleService.findByName("admin"));
-		System.out.println(roleService.findByName("user"));
-		System.out.println(roleService.findByName("anonymous"));
+		pokeService.getPokemonByIdNetwork(1);
 		return ResponseEntity.ok(new JwtResponse(jwt, 
 				userDetails.getId(), 
 				userDetails.getUsername(), 

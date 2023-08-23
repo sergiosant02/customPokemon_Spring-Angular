@@ -6,7 +6,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.customPokemonApi.customPokemonApi.controllers.UserController;
-import com.customPokemonApi.customPokemonApi.services.UserDetailsServiceImpl;
+import com.customPokemonApi.customPokemonApi.services.user.UserDetailsServiceImpl;
 
 @WebMvcTest(controllers = UserController.class)
 public class UserControllerTest {

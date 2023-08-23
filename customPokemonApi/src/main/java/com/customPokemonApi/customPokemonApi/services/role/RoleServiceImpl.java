@@ -1,4 +1,4 @@
-package com.customPokemonApi.customPokemonApi.services;
+package com.customPokemonApi.customPokemonApi.services.role;
 
 import java.util.Optional;
 
@@ -12,12 +12,12 @@ import com.customPokemonApi.customPokemonApi.repository.RoleRepository;
 import jakarta.transaction.Transactional;
 
 @Service
-public class RoleService {
+public class RoleServiceImpl implements RoleService{
 	
 	@Autowired
 	private RoleRepository roleRepository;
 	
-	public RoleService(RoleRepository roleRepository) {
+	public RoleServiceImpl(RoleRepository roleRepository) {
 		this.roleRepository = roleRepository;
 	}
 	

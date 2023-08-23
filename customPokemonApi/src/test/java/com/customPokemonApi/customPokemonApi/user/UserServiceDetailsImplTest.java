@@ -25,8 +25,8 @@ import com.customPokemonApi.customPokemonApi.models.rolePack.Role;
 import com.customPokemonApi.customPokemonApi.models.user.UserModel;
 import com.customPokemonApi.customPokemonApi.repository.RoleRepository;
 import com.customPokemonApi.customPokemonApi.repository.UserRepository;
-import com.customPokemonApi.customPokemonApi.services.RoleService;
-import com.customPokemonApi.customPokemonApi.services.UserDetailsServiceImpl;
+import com.customPokemonApi.customPokemonApi.services.role.RoleServiceImpl;
+import com.customPokemonApi.customPokemonApi.services.user.UserDetailsServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceDetailsImplTest {
@@ -37,7 +37,7 @@ public class UserServiceDetailsImplTest {
 	private RoleRepository roleRepository;
 	
 	private UserDetailsServiceImpl userService;
-	private RoleService roleService;
+	private RoleServiceImpl roleService;
 	private Role role;
 
 	
@@ -50,7 +50,7 @@ public class UserServiceDetailsImplTest {
 	private void config() {
 		userList = new ArrayList<UserModel>();
 		credList = new ArrayList<CreateAccountCredentials>();
-		roleService = new RoleService(roleRepository);
+		roleService = new RoleServiceImpl(roleRepository);
 		userService = new UserDetailsServiceImpl(userRepository, roleService);
 		role = new Role(ERole.USER);
 		for(int i= 1; i <=3; i++) {

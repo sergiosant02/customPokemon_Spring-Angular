@@ -16,7 +16,7 @@ import java.util.Optional;
 import com.customPokemonApi.customPokemonApi.models.rolePack.ERole;
 import com.customPokemonApi.customPokemonApi.models.rolePack.Role;
 import com.customPokemonApi.customPokemonApi.repository.RoleRepository;
-import com.customPokemonApi.customPokemonApi.services.RoleService;
+import com.customPokemonApi.customPokemonApi.services.role.RoleServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 public class RoleServiceTest {
@@ -24,12 +24,12 @@ public class RoleServiceTest {
 	@Mock
 	private RoleRepository roleRepository;
 	
-	private RoleService roleService;
+	private RoleServiceImpl roleService;
 	private Role role;
 	
 	@BeforeEach
 	private void config() {
-		roleService = new RoleService(roleRepository);
+		roleService = new RoleServiceImpl(roleRepository);
 		role = new Role(ERole.USER);
 	}
 	
