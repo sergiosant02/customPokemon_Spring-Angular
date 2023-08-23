@@ -13,6 +13,6 @@ public interface PokemonRepository extends CrudRepository<Pokemon, Long> {
 
 	public List<Pokemon> findAll();
 	
-	@Query("SELECT poke FROM Pokemon poke JOIN poke.photoSprites photo JOIN poke.abilities ab JOIN poke.stats stats JOIN stat.nameStat nameStat JOIN ab.abilityInfo abinfo")
-	public List<Pokemon> findAllInfoAboutPokemons();
+//	@Query("SELECT poke FROM Pokemon poke JOIN poke.photoSprites photo JOIN poke.abilities ab JOIN poke.stats stats JOIN stat.nameStat nameStat JOIN ab.abilityInfo abinfo")
+//	public List<Pokemon> findAllInfoAboutPokemons();
 }

@@ -19,11 +19,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.customPokemonApi.customPokemonApi.models.PokemonGeneralResponse;
 import com.customPokemonApi.customPokemonApi.models.pokemon.Pokemon;
-import com.customPokemonApi.customPokemonApi.repository.PokemonRepository;
+
 import com.customPokemonApi.customPokemonApi.repository.pokemon.AbilityInfoRepository;
 import com.customPokemonApi.customPokemonApi.repository.pokemon.AbilityRepository;
 import com.customPokemonApi.customPokemonApi.repository.pokemon.NameStatRepository;
 import com.customPokemonApi.customPokemonApi.repository.pokemon.PhotoSpritesRepository;
+import com.customPokemonApi.customPokemonApi.repository.pokemon.PokemonRepository;
 import com.customPokemonApi.customPokemonApi.repository.pokemon.StatRepository;
 
 @Service

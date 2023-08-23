@@ -46,7 +46,9 @@ import com.customPokemonApi.customPokemonApi.models.pokemon.Pokemon;
 import com.customPokemonApi.customPokemonApi.models.rolePack.ERole;
 import com.customPokemonApi.customPokemonApi.models.user.UserDetailsImpl;
 import com.customPokemonApi.customPokemonApi.models.user.UserModel;
+import com.customPokemonApi.customPokemonApi.services.pokemon.AbilityService;
 import com.customPokemonApi.customPokemonApi.services.pokemon.PokemonServiceImpl;
+import com.customPokemonApi.customPokemonApi.services.pokemon.StatService;
 import com.customPokemonApi.customPokemonApi.services.role.RoleServiceImpl;
 import com.customPokemonApi.customPokemonApi.services.user.UserDetailsServiceImpl;
 
@@ -71,11 +73,18 @@ public class UserController {
 	
 	@Autowired
 	private PasswordEncoder encoder;
+	
+	@Autowired
+	private AbilityService abilityService;
+	
+	@Autowired
+	private StatService statService;
 
 
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@RequestBody AccountCredentials loginRequest) {
 
+		
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),loginRequest.getPassword()));
 
@@ -85,7 +94,9 @@ public class UserController {
 		List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
-		pokeService.getPokemonByIdNetwork(1);
+//		pokeService.getPokemonByIdNetwork(1);
+		abilityService.getAbilityByAbilityInfoName("overgrow");
+		statService.getStatByStatName("hp");
 		return ResponseEntity.ok(new JwtResponse(jwt, 
 				userDetails.getId(), 
 				userDetails.getUsername(), 
