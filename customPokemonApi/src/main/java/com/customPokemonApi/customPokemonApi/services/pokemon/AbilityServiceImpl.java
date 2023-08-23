@@ -15,10 +15,30 @@ public class AbilityServiceImpl implements AbilityService{
 	private AbilityRepository abilityRepository;
 	
 	
+	
 	@Override
 	public Optional<Ability> getAbilityByAbilityInfoName(String name) {
 		Optional<Ability> ab=abilityRepository.getAbilityByAbilityInfoName(name);
 		return ab;
+	}
+	
+	@Override
+	public Ability manageAbility(Ability ability) {
+		Ability res;
+		Optional<Ability> ab = this.getAbilityByAbilityInfoName(ability.getAbilityInfo().getName());
+		if(ab.isPresent()) {
+			res = ab.get();
+		} else {
+			res = this.save(ability);
+		}
+		return res;
+		
+	}
+
+	@Override
+	public Ability save(Ability ability) {
+		
+		return abilityRepository.save(ability);
 	}
 
 }
