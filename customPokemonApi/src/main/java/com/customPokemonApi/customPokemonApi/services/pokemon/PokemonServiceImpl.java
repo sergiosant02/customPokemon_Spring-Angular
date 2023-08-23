@@ -79,7 +79,6 @@ public class PokemonServiceImpl implements PokemonService{
 	public Pokemon getPokemonByNameNetwork(String name) {
 		String path = String.format("/%s", name);
 		UriComponentsBuilder builder = UriComponentsBuilder.fromPath(path);
-		PokemonGeneralResponse<Pokemon> res;
 		Pokemon poke;
 
 		ResponseEntity<Pokemon> response = pokemonApiRestTemplate
