@@ -10,9 +10,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity(name = "PhotoSprites")
+@Getter
+@Setter
 public class PhotoSprites {
 	@Id
 	@JsonProperty("id")

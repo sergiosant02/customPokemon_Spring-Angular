@@ -7,7 +7,11 @@ import org.springframework.http.HttpStatus;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class UserGeneralResponse<T> {
 
 		@JsonProperty("response")
@@ -29,32 +33,4 @@ public class UserGeneralResponse<T> {
 	        this.httpStatus = httpStatus;
 	    }
 	    
-	    public T getResponse() {
-			return response;
-		}
-
-
-		public void setResponse(T response) {
-			this.response = response;
-		}
-
-
-		public HttpStatus getHttpStatus() {
-			return httpStatus;
-		}
-
-
-		public void setHttpStatus(HttpStatus httpStatus) {
-			this.httpStatus = httpStatus;
-		}
-
-
-		public Set<String> getUserMessages() {
-			return userMessages;
-		}
-
-
-		public void setUserMessages(Set<String> userMessages) {
-			this.userMessages = userMessages;
-		}
 }
