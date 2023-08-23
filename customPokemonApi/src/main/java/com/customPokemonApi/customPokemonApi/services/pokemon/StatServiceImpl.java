@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.customPokemonApi.customPokemonApi.models.pokemon.Ability;
 import com.customPokemonApi.customPokemonApi.models.pokemon.Stat;
+import com.customPokemonApi.customPokemonApi.repository.pokemon.NameStatRepository;
 import com.customPokemonApi.customPokemonApi.repository.pokemon.StatRepository;
 
 @Service
@@ -14,7 +15,8 @@ public class StatServiceImpl implements StatService{
 
 	@Autowired
 	private StatRepository statRepository;
-	
+	@Autowired
+	private NameStatRepository nameStatRepository;
 	
 	@Override
 	public Optional<Stat> getStatByStatName(String name) {
@@ -25,10 +27,11 @@ public class StatServiceImpl implements StatService{
 	@Override
 	public Stat manageState(Stat stat) {
 		Stat res;
-		Optional<Stat> ab = this.getStatByStatName(stat.getNameStat().getName());
-		if(ab.isPresent()) {
-			res = ab.get();
+		Optional<Stat> st = this.getStatByStatName(stat.getNameStat().getName());
+		if(st.isPresent()) {
+			res = st.get();
 		} else {
+			stat.setNameStat(nameStatRepository.save(stat.getNameStat()));
 			res = this.save(stat);
 		}
 		return res;

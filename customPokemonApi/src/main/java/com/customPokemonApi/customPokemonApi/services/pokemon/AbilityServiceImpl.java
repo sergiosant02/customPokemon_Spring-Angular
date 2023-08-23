@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.customPokemonApi.customPokemonApi.models.pokemon.Ability;
+import com.customPokemonApi.customPokemonApi.repository.pokemon.AbilityInfoRepository;
 import com.customPokemonApi.customPokemonApi.repository.pokemon.AbilityRepository;
 
 @Service
@@ -13,6 +14,8 @@ public class AbilityServiceImpl implements AbilityService{
 	
 	@Autowired
 	private AbilityRepository abilityRepository;
+	@Autowired
+	private AbilityInfoRepository abilityInfoRepository;
 	
 	
 	
@@ -29,8 +32,11 @@ public class AbilityServiceImpl implements AbilityService{
 		if(ab.isPresent()) {
 			res = ab.get();
 		} else {
+			ability.setAbilityInfo(abilityInfoRepository.save(ability.getAbilityInfo()));
 			res = this.save(ability);
+			
 		}
+		System.out.println(res);
 		return res;
 		
 	}
