@@ -20,33 +20,69 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.customPokemonApi.customPokemonApi.models.PokemonGeneralResponse;
 import com.customPokemonApi.customPokemonApi.models.pokemon.Pokemon;
 import com.customPokemonApi.customPokemonApi.repository.PokemonRepository;
+import com.customPokemonApi.customPokemonApi.repository.pokemon.AbilityInfoRepository;
+import com.customPokemonApi.customPokemonApi.repository.pokemon.AbilityRepository;
+import com.customPokemonApi.customPokemonApi.repository.pokemon.NameStatRepository;
+import com.customPokemonApi.customPokemonApi.repository.pokemon.PhotoSpritesRepository;
+import com.customPokemonApi.customPokemonApi.repository.pokemon.StatRepository;
 
 @Service
 public class PokemonServiceImpl implements PokemonService{
-	
+
+	private RestTemplate pokemonApiRestTemplate;
+	private HttpHeaders httpHeaders;
+
 	private PokemonRepository pokemonRepository;
-    private RestTemplate pokemonApiRestTemplate;
-    private HttpHeaders httpHeaders;
-    
-	public PokemonServiceImpl(PokemonRepository pokemonRepository, @Qualifier("PokemonApiTemplate") RestTemplate pokemonApiRestTemplate){
-		this.pokemonRepository = pokemonRepository;
+	private AbilityRepository abilityRepository;
+	private AbilityInfoRepository abilityInfoRepository;
+	private NameStatRepository nameStatRepository;
+	private StatRepository statRepository;
+	private PhotoSpritesRepository photoSpritesRepository;
+
+	public PokemonServiceImpl(PokemonRepository pokemonRepository, @Qualifier("PokemonApiTemplate") RestTemplate pokemonApiRestTemplate,AbilityRepository abilityRepository, AbilityInfoRepository abilityInfoRepository,
+			NameStatRepository nameStatRepository, StatRepository statRepository,
+			PhotoSpritesRepository photoSpritesRepository){
 		this.pokemonApiRestTemplate = pokemonApiRestTemplate;
 		this.httpHeaders = new HttpHeaders();;
+		
+		this.pokemonRepository = pokemonRepository;
+		this.abilityRepository = abilityRepository;
+		this.abilityInfoRepository = abilityInfoRepository;
+		this.nameStatRepository = nameStatRepository;
+		this.statRepository = statRepository;
+		this.photoSpritesRepository = photoSpritesRepository;
 	}
-	
+
 	@Override
 	public PokemonGeneralResponse<Pokemon> getPokemonByIdNetwork(Integer id) {
 		String path = String.format("/%d", id);
 		UriComponentsBuilder builder = UriComponentsBuilder.fromPath(path);
-		
-		
+		PokemonGeneralResponse<Pokemon> res;
+		Pokemon poke;
+
 		ResponseEntity<Pokemon> response = pokemonApiRestTemplate
 				.exchange(builder.build().toString(), HttpMethod.GET, new HttpEntity<>(httpHeaders), new ParameterizedTypeReference<Pokemon>() {});
-		 if (response.getStatusCode() == HttpStatus.OK) {
-	            System.out.println(Objects.requireNonNull(response.getBody()).toString());
-	        } else {
-	            throw new IllegalArgumentException("Error: Issue retrieving pokemon.");
-	        }
+		if (response.getStatusCode() == HttpStatus.OK) {
+			poke = Objects.requireNonNull(response.getBody());
+			poke.getAbilities().forEach(
+					ab -> {
+						ab.setAbilityInfo(abilityInfoRepository.save( ab.getAbilityInfo() ) );
+						ab = abilityRepository.save(ab);
+					}
+					);
+			
+			poke.getStats().forEach(
+					stat -> {
+						stat.setNameStat(nameStatRepository.save(stat.getNameStat()));
+						stat = statRepository.save(stat);
+					}
+					);
+			poke.setPhotoSprites(photoSpritesRepository.save(poke.getPhotoSprites()));
+			pokemonRepository.save(poke);
+			
+		} else {
+			throw new IllegalArgumentException("Error: Issue retrieving pokemon.");
+		}
 		
 		return null;
 	}
@@ -55,8 +91,8 @@ public class PokemonServiceImpl implements PokemonService{
 	@Scheduled(fixedRate = 604800016) //Vuelve a popular la Bd cada dos semanas, para garantizar un minimo de actualidad.
 	@Override
 	public void populateBdPokemon() {
-		
-		
+
+
 	}
 
 	@Override
@@ -83,6 +119,6 @@ public class PokemonServiceImpl implements PokemonService{
 		return null;
 	}
 
-	
+
 
 }

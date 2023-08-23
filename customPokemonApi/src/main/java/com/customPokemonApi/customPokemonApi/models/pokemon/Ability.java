@@ -8,9 +8,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.Setter;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity(name = "Ability")
+@Getter
+@Setter
 public class Ability {
 	@Id
 	@JsonProperty("id")
@@ -27,37 +31,6 @@ public class Ability {
 	@JsonProperty("ability")
 	private AbilityInfo abilityInfo;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Integer getSlot() {
-		return slot;
-	}
-
-	public void setSlot(Integer slot) {
-		this.slot = slot;
-	}
-
-	public Boolean getIsHidden() {
-		return isHidden;
-	}
-
-	public void setIsHidden(Boolean isHidden) {
-		this.isHidden = isHidden;
-	}
-
-	public AbilityInfo getAbilityInfo() {
-		return abilityInfo;
-	}
-
-	public void setAbilityInfo(AbilityInfo abilityInfo) {
-		this.abilityInfo = abilityInfo;
-	}
 
 	@Override
 	public String toString() {
