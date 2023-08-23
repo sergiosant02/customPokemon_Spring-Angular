@@ -96,8 +96,8 @@ public class UserController {
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 
-		//System.out.println(pokeService.getPokemonByIdNetwork(id));
-		System.out.println(pokeService.getPokemonById(10L));;
+		System.out.println(pokeService.getPokemonByIdNetwork(1L));
+		//System.out.println(pokeService.getPokemonById(10L));;
 		return ResponseEntity.ok(new JwtResponse(jwt, 
 				userDetails.getId(), 
 				userDetails.getUsername(), 
