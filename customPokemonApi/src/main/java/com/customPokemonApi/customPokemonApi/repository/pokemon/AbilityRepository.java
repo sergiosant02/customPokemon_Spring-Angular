@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.customPokemonApi.customPokemonApi.models.pokemon.Ability;
-import com.customPokemonApi.customPokemonApi.models.pokemon.AbilityInfo;
 
 @Repository
 public interface AbilityRepository extends CrudRepository<Ability, Long> {

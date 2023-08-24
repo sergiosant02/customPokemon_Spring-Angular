@@ -21,12 +21,17 @@ public class AbilityServiceImpl implements AbilityService{
 	
 	@Override
 	public Optional<Ability> getAbilityByAbilityInfoName(Ability ability) {
-		Optional<Ability> ab=abilityRepository.findAbilityByAbilityInfoName(ability.getAbilityInfo().getName(), ability.getSlot(), ability.getIsHidden());
+		ability.getAbilityInfo().setName(ability.getAbilityInfo().getName().replaceAll("-", "_"));
+		
+		Optional<Ability> ab = abilityRepository.findAbilityByAbilityInfoName(ability.getAbilityInfo().getName(), ability.getSlot(), ability.getIsHidden());
 		return ab;
 	}
 	
 	@Override
 	public Ability manageAbility(Ability ability) {
+		if(ability.getAbilityInfo().getName().split("-").length > 1) {
+			ability.getAbilityInfo().setName(ability.getAbilityInfo().getName().replaceAll("-", "_"));
+		}
 		Ability res;
 		Optional<Ability> ab = this.getAbilityByAbilityInfoName(ability);
 		if(ab.isPresent()) {
@@ -42,7 +47,9 @@ public class AbilityServiceImpl implements AbilityService{
 
 	@Override
 	public Ability save(Ability ability) {
-		
+		if(ability.getAbilityInfo().getName().split("-").length > 1) {
+			ability.getAbilityInfo().setName(ability.getAbilityInfo().getName().replaceAll("-", "_"));
+		}
 		return abilityRepository.save(ability);
 	}
 

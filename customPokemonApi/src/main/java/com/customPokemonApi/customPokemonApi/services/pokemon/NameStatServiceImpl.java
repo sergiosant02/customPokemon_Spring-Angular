@@ -3,10 +3,12 @@ package com.customPokemonApi.customPokemonApi.services.pokemon;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.customPokemonApi.customPokemonApi.models.pokemon.NameStat;
 import com.customPokemonApi.customPokemonApi.repository.pokemon.NameStatRepository;
 
+@Service
 public class NameStatServiceImpl implements NameStatService {
 
 	@Autowired

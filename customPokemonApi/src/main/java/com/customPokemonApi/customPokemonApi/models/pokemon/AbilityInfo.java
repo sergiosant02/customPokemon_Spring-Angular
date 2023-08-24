@@ -13,20 +13,20 @@ import lombok.Setter;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity(name = "AbilityInfo")
-@Getter
-@Setter
 public class AbilityInfo {
+
+
 	@Id
 	@JsonProperty("id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private Long id;
 	
 	@JsonProperty("name")
-	//@Column(unique = true)
+	@Column(unique = true)
 	private String name;
 
 	public String getName() {
-		return name.replaceAll("-", " ");
+		return name.replaceAll("-", "_");
 	}
 
 	@Override
@@ -34,4 +34,16 @@ public class AbilityInfo {
 		return "AbilityInfo [id=" + id + ", name=" + name + "]";
 	}
 	
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

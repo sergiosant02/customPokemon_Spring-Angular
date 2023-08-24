@@ -15,7 +15,7 @@ public class StatServiceImpl implements StatService{
 	@Autowired
 	private StatRepository statRepository;
 	@Autowired
-	private NameStatRepository nameStatRepository;
+	private NameStatServiceImpl nameService;
 	
 	@Override
 	public Optional<Stat> getStatByStatName(String name, Integer baseStat) {
@@ -30,7 +30,7 @@ public class StatServiceImpl implements StatService{
 		if(st.isPresent()) {
 			res = st.get();
 		} else {
-			stat.setNameStat(nameStatRepository.save(stat.getNameStat()));
+			stat.setNameStat(nameService.manageNameStat(stat.getNameStat()));
 			res = this.save(stat);
 		}
 		return res;
