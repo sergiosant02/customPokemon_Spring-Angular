@@ -16,6 +16,8 @@ public class PhotoSpritesServiceImpl implements PhotoSpritesService{
 	private PhotoSpritesRepository phRepository;
 	
 	
+	
+	
 	@Override
 	public Optional<PhotoSprites> getPhotoSpritesByLink(String backDefault,String backFemale, String backShiny, String backShinyFemale, String frontDefault,  String frontFemale, 
 			String frontShiny, String frontShinyFemale) {
@@ -31,6 +33,14 @@ public class PhotoSpritesServiceImpl implements PhotoSpritesService{
 		if(ph.isPresent()) {
 			res = ph.get();
 		} else {
+			photo.setBackDefault(photo.getBackDefault());
+			photo.setBackFemale(photo.getBackFemale());
+			photo.setBackShiny(photo.getBackShiny());
+			photo.setBackShinyFemale(photo.getBackShinyFemale());
+			photo.setFrontDefault(photo.getFrontDefault());
+			photo.setFrontFemale(photo.getFrontFemale());
+			photo.setFrontShiny(photo.getFrontShiny());
+			photo.setFrontShinyFemale(photo.getFrontShinyFemale());
 			res = this.save(photo);
 		}
 		return res;

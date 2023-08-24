@@ -39,18 +39,18 @@ public class PokemonServiceImpl implements PokemonService{
 	private PokemonRepository pokemonRepository;
 	private AbilityServiceImpl abilityService;
 	private StatServiceImpl statService;
-	private PhotoSpritesRepository photoSpritesRepository;
+	private PhotoSpritesServiceImpl photoSpritesServiceImpl;
 
 	public PokemonServiceImpl(PokemonRepository pokemonRepository, @Qualifier("PokemonApiTemplate") RestTemplate pokemonApiRestTemplate,AbilityServiceImpl abilityService, AbilityInfoRepository abilityInfoRepository,
 			StatServiceImpl statService,
-			PhotoSpritesRepository photoSpritesRepository){
+			PhotoSpritesServiceImpl photoSpritesServiceImpl){
 		this.pokemonApiRestTemplate = pokemonApiRestTemplate;
 		this.httpHeaders = new HttpHeaders();;
 		
 		this.pokemonRepository = pokemonRepository;
 		this.abilityService = abilityService;
 		this.statService = statService;
-		this.photoSpritesRepository = photoSpritesRepository;
+		this.photoSpritesServiceImpl = photoSpritesServiceImpl;
 	}
 
 	@Override
@@ -149,7 +149,7 @@ public class PokemonServiceImpl implements PokemonService{
 				).toList();
 		pokemon.setAbilities(abList);
 		pokemon.setStats(stList);
-		pokemon.setPhotoSprites(photoSpritesRepository.save(pokemon.getPhotoSprites()));
+		pokemon.setPhotoSprites(photoSpritesServiceImpl.managePhotoSprites(pokemon.getPhotoSprites()));
 		
 		return pokemonRepository.save(pokemon);
 	}
