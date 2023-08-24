@@ -5,4 +5,7 @@ select * from role;
 use userInfo;
 describe credentials;
 describe role;
-
+select * from pokemon;
+select * from ability;
+select * from ability_info;
+select * from photo_sprites;

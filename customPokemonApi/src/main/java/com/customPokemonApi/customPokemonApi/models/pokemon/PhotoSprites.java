@@ -6,6 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,27 +25,35 @@ public class PhotoSprites {
 	private Long id;
 	
     @JsonProperty("back_default")
+    @Column(unique = true)
     private String backDefault;
     
     @JsonProperty("back_female")
+    @Column(unique = true)
     private String backFemale;
     
     @JsonProperty("back_shiny")
+    @Column(unique = true)
     private String backShiny;
     
     @JsonProperty("back_shiny_female")
+    @Column(unique = true)
     private String backShinyFemale;
     
     @JsonProperty("front_default")
+    @Column(unique = true)
     private String frontDefault;
     
     @JsonProperty("front_female")
+    @Column(unique = true)
     private String frontFemale;
     
     @JsonProperty("front_shiny")
+    @Column(unique = true)
     private String frontShiny;
     
     @JsonProperty("front_shiny_female")
+    @Column(unique = true)
     private String frontShinyFemale;
     
     public List<String> getPhtos(){
