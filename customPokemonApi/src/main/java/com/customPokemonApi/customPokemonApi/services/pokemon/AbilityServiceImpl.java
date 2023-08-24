@@ -15,28 +15,27 @@ public class AbilityServiceImpl implements AbilityService{
 	@Autowired
 	private AbilityRepository abilityRepository;
 	@Autowired
-	private AbilityInfoRepository abilityInfoRepository;
+	private AbilityInfoServiceImpl abilityInfoService;
 	
 	
 	
 	@Override
-	public Optional<Ability> getAbilityByAbilityInfoName(String name) {
-		Optional<Ability> ab=abilityRepository.getAbilityByAbilityInfoName(name);
+	public Optional<Ability> getAbilityByAbilityInfoName(Ability ability) {
+		Optional<Ability> ab=abilityRepository.findAbilityByAbilityInfoName(ability.getAbilityInfo().getName(), ability.getSlot(), ability.getIsHidden());
 		return ab;
 	}
 	
 	@Override
 	public Ability manageAbility(Ability ability) {
 		Ability res;
-		Optional<Ability> ab = this.getAbilityByAbilityInfoName(ability.getAbilityInfo().getName());
+		Optional<Ability> ab = this.getAbilityByAbilityInfoName(ability);
 		if(ab.isPresent()) {
 			res = ab.get();
 		} else {
-			ability.setAbilityInfo(abilityInfoRepository.save(ability.getAbilityInfo()));
+			ability.setAbilityInfo(abilityInfoService.manageAbilityInfo(ability.getAbilityInfo()));
 			res = this.save(ability);
 			
 		}
-		System.out.println(res);
 		return res;
 		
 	}

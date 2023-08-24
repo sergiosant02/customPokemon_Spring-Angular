@@ -93,21 +93,32 @@ public class PokemonServiceImpl implements PokemonService{
 	}
 
 	//Hay un maximo de 1010 ids
-	@Scheduled(fixedRate = 604800016) //Vuelve a popular la Bd cada dos semanas, para garantizar un minimo de actualidad.
+	@Scheduled(fixedRate = 604800016) //Vuelve a popular la Bd cada dos semanas, para garantizar un minimo de actualidad. 604800016 ms
 	@Override
 	public void populateBdPokemon() {
-
+		if(getPokemonList().size() < 100) {
+			for(int i = 1; i <= 100; i++) {
+				this.getPokemonByIdNetwork((long) i);
+			}
+		}
+		
 
 	}
 
 	@Override
-	public PokemonGeneralResponse<List<Pokemon>> getPokemonList() {
+	public List<Pokemon> getPokemonList() {
+		
+		return pokemonRepository.findAll();
+	}
+	
+	@Override
+	public PokemonGeneralResponse<List<Pokemon>> getPokemonListResponse() {
 		// TODO Auto-generated method stub
-		return null;
+		return new PokemonGeneralResponse<List<Pokemon>>(this.getPokemonList(), HttpStatus.OK);
 	}
 
 	@Override
-	public PokemonGeneralResponse<List<Pokemon>> inceasePokemonListData() {
+	public PokemonGeneralResponse<List<Pokemon>> increasePokemonListData() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -153,6 +164,8 @@ public class PokemonServiceImpl implements PokemonService{
 		
 		return pokemonRepository.save(pokemon);
 	}
+
+	
 
 
 

@@ -22,7 +22,7 @@ public class AbilityInfo {
 	private Long id;
 	
 	@JsonProperty("name")
-	@Column(unique = true)
+	//@Column(unique = true)
 	private String name;
 
 	public String getName() {

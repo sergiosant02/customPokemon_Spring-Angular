@@ -12,7 +12,7 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity(name = "Namestat")
+@Entity(name = "NameStat")
 @Getter
 @Setter
 public class NameStat {

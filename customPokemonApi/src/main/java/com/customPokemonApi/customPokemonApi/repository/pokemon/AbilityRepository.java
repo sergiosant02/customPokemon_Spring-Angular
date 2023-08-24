@@ -13,6 +13,6 @@ import com.customPokemonApi.customPokemonApi.models.pokemon.AbilityInfo;
 @Repository
 public interface AbilityRepository extends CrudRepository<Ability, Long> {
 
-	@Query("SELECT ab FROM Ability ab WHERE ab.abilityInfo.name = :name")
-	public Optional<Ability> getAbilityByAbilityInfoName(@Param("name") String name);
+	@Query("SELECT ab FROM Ability ab WHERE ab.abilityInfo.name = :name AND ab.slot = :slot AND ab.isHidden = :isHidden")
+	public Optional<Ability> findAbilityByAbilityInfoName(@Param("name") String name, @Param("slot") Integer slot, @Param("isHidden") Boolean isHidden);
 }
