@@ -10,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
@@ -50,11 +51,11 @@ public class Pokemon {
 	@JsonProperty("sprites")
 	private PhotoSprites photoSprites;
 	
-	@OneToMany
+	@ManyToMany
 	@JsonProperty("abilities")
 	private List<Ability> abilities;
 	
-	@OneToMany
+	@ManyToMany
 	@JsonProperty("stats")
 	private List<Stat> stats;
 	

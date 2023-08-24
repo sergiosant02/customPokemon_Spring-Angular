@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.customPokemonApi.customPokemonApi.models.pokemon.Ability;
 import com.customPokemonApi.customPokemonApi.models.pokemon.Stat;
 import com.customPokemonApi.customPokemonApi.repository.pokemon.NameStatRepository;
 import com.customPokemonApi.customPokemonApi.repository.pokemon.StatRepository;
@@ -19,15 +18,15 @@ public class StatServiceImpl implements StatService{
 	private NameStatRepository nameStatRepository;
 	
 	@Override
-	public Optional<Stat> getStatByStatName(String name) {
-		Optional<Stat> st=statRepository.getStatByStatName(name);
+	public Optional<Stat> getStatByStatName(String name, Integer baseStat) {
+		Optional<Stat> st=statRepository.getStatByStatName(name, baseStat);
 		return st;
 	}
 	
 	@Override
 	public Stat manageState(Stat stat) {
 		Stat res;
-		Optional<Stat> st = this.getStatByStatName(stat.getNameStat().getName());
+		Optional<Stat> st = this.getStatByStatName(stat.getNameStat().getName(), stat.getBaseStat());
 		if(st.isPresent()) {
 			res = st.get();
 		} else {

@@ -5,7 +5,7 @@ import java.util.Optional;
 import com.customPokemonApi.customPokemonApi.models.pokemon.Ability;
 
 public interface AbilityService {
-	public Optional<Ability> getAbilityByAbilityInfoName(String name);
+	public Optional<Ability> getAbilityByAbilityInfoName(Ability ability);
 	public Ability save(Ability ability);
 	public Ability manageAbility(Ability ability);
 }

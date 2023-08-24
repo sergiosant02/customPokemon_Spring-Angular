@@ -11,7 +11,7 @@ import com.customPokemonApi.customPokemonApi.models.pokemon.Stat;
 
 @Repository
 public interface StatRepository extends CrudRepository<Stat, Long> {
-	@Query("SELECT st FROM Stat st WHERE st.nameStat.name = :name")
-	public Optional<Stat> getStatByStatName(@Param("name") String name);
+	@Query("SELECT st FROM Stat st WHERE st.nameStat.name = :name AND st.baseStat = :baseStat")
+	public Optional<Stat> getStatByStatName(@Param("name") String name, @Param("baseStat") Integer baseStat);
 
 }

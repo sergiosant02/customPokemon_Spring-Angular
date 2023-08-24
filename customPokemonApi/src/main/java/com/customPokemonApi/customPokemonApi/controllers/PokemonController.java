@@ -32,7 +32,7 @@ public class PokemonController {
 	@GetMapping("")
 	public ResponseEntity<PokemonGeneralResponse> getAllPokemons(){
 		ResponseEntity<PokemonGeneralResponse> responseEntity;
-		PokemonGeneralResponse serviceResponse = pokemonService.getPokemonList();
+		PokemonGeneralResponse serviceResponse = pokemonService.getPokemonListResponse();
         responseEntity = new ResponseEntity<>(serviceResponse, serviceResponse.getHttpStatus());
 		return responseEntity;
 	}
