@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import org.eclipse.collections.impl.list.mutable.FastList;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -13,7 +12,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -23,11 +21,8 @@ import com.customPokemonApi.customPokemonApi.models.pokemon.Ability;
 import com.customPokemonApi.customPokemonApi.models.pokemon.Pokemon;
 import com.customPokemonApi.customPokemonApi.models.pokemon.Stat;
 import com.customPokemonApi.customPokemonApi.repository.pokemon.AbilityInfoRepository;
-import com.customPokemonApi.customPokemonApi.repository.pokemon.AbilityRepository;
-import com.customPokemonApi.customPokemonApi.repository.pokemon.NameStatRepository;
-import com.customPokemonApi.customPokemonApi.repository.pokemon.PhotoSpritesRepository;
+
 import com.customPokemonApi.customPokemonApi.repository.pokemon.PokemonRepository;
-import com.customPokemonApi.customPokemonApi.repository.pokemon.StatRepository;
 import com.customPokemonApi.customPokemonApi.utils.Utils;
 
 @Service
@@ -96,7 +91,7 @@ public class PokemonServiceImpl implements PokemonService{
 	@Scheduled(fixedRate = 604800016) //Vuelve a popular la Bd cada dos semanas, para garantizar un minimo de actualidad. 604800016 ms
 	@Override
 	public void populateBdPokemon() {
-		if(getPokemonList().size() < 100) {
+		if(getPokemonList().size() < 1000) {
 			for(int i = 1; i <= 100; i++) {
 				this.getPokemonByIdNetwork((long) i);
 			}
@@ -117,11 +112,6 @@ public class PokemonServiceImpl implements PokemonService{
 		return new PokemonGeneralResponse<List<Pokemon>>(this.getPokemonList(), HttpStatus.OK);
 	}
 
-	@Override
-	public PokemonGeneralResponse<List<Pokemon>> increasePokemonListData() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public PokemonGeneralResponse<Pokemon> getPokemonById(Long id) {
@@ -139,6 +129,9 @@ public class PokemonServiceImpl implements PokemonService{
 	public PokemonGeneralResponse<Pokemon> getPokemonByName(String name) {
 		PokemonGeneralResponse<Pokemon> res;
 		Optional<Pokemon> poke = pokemonRepository.findByName(name);
+		if(poke.isEmpty()) {
+			poke = Optional.of(this.getPokemonByNameNetwork(name));
+		}
 		res = new PokemonGeneralResponse<Pokemon>(poke.orElse(null), Utils.getHttpCodeOptional(poke));
 		return res;
 	}

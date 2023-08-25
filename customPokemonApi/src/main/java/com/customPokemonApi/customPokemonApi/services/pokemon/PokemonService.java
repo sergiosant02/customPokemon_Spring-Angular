@@ -9,7 +9,6 @@ public interface PokemonService {
 	public void populateBdPokemon();
 	public List<Pokemon> getPokemonList();
 	public PokemonGeneralResponse<List<Pokemon>> getPokemonListResponse();
-	public PokemonGeneralResponse<List<Pokemon>> increasePokemonListData();
 	public PokemonGeneralResponse<Pokemon> getPokemonById(Long id);
 	public PokemonGeneralResponse<Pokemon> getPokemonByName(String name);
 	public Pokemon getPokemonByIdNetwork(Long id);
