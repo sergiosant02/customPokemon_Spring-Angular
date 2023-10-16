@@ -41,7 +41,7 @@ public class RoleServiceTest {
 	
 	@Test
 	public void findRoleBad() {
-		when(roleRepository.findByName(ERole.ADMIN)).thenReturn(Optional.empty());
-		assertNull(roleService.findByErole(ERole.ADMIN), "Devuelve un objeto");
+		when(roleRepository.findByName(ERole.SUPERADMIN)).thenReturn(Optional.empty());
+		assertNull(roleService.findByErole(ERole.SUPERADMIN), "Devuelve un objeto");
 	}
 }
